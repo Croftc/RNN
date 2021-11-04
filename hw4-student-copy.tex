@@ -1,0 +1,310 @@
+\documentclass[12pt]{amsart}
+\newcommand\stacksymbol[2]{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny #1}}}{#2}}}
+
+
+%Below are some necessary packages for your course.
+\usepackage{amsfonts,latexsym,amsthm,amssymb,amsmath,amscd,euscript,tikz}
+\usepackage{framed}
+\usepackage{fullpage}
+\usepackage{comment}
+\usepackage{tikz}
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{dsfont}
+\usepackage{hyperref}
+\usetikzlibrary{patterns}
+\usepackage{subfig}
+\usepackage{float}
+\usepackage{listings}
+% \usepackage[cache=false]{minted}
+
+\lstset{
+  basicstyle=\footnotesize,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth
+}
+
+\usetikzlibrary{decorations.markings,decorations.pathmorphing}
+\usepackage{tikz-cd}
+\usepackage{enumitem}
+\usepackage{hyperref}
+    \hypersetup{colorlinks=true,citecolor=blue,urlcolor =blue,linkbordercolor={1 0 0}}
+
+\newenvironment{statement}[1]{\smallskip\noindent\color[rgb]{0.0,0.0,0.0} {\bf #1.}}{}
+\newenvironment{solution}[1]{\vspace{5mm}\smallskip\noindent\color[rgb]{0.0,0.0,0.75} {\bf #1.}}{}
+\allowdisplaybreaks[1]
+
+%Below are the theorem, definition, example, lemma, etc. body types.
+
+\newtheorem{theorem}{Theorem}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{postulate}[theorem]{Postulate}
+\theoremstyle{definition}
+\newtheorem{defn}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{notation}{Notation}
+\newtheorem*{note}{Note}
+
+% You can define new commands to make your life easier.
+\newcommand{\BR}{\mathbb R}
+\newcommand{\BC}{\mathbb C}
+\newcommand{\BF}{\mathbb F}
+\newcommand{\BQ}{\mathbb Q}
+\newcommand{\BZ}{\mathbb Z}
+\newcommand{\BN}{\mathbb N}
+\newcommand{\BE}{\mathbb E}
+
+\newcommand{\CU}{\mathcal{U}}
+\newcommand{\CO}{\mathcal{O}}
+\newcommand{\CC}{\mathcal{C}}
+\newcommand{\Ob}{\operatorname{Ob}}
+\newcommand{\Mor}{\operatorname{Mor}}
+
+
+% We can even define a new command for \newcommand!
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\bP}{\mathbb{P}}
+
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\ch}{\operatorname{char}}
+\newcommand{\image}{\operatorname{im}}
+\newcommand{\kernel}{\operatorname{ker}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\sym}{\operatorname{Sym}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\Res}{\operatorname{Res}}
+
+\newcommand{\Pois}{\text{Pois}}
+\newcommand{\ex}{\text{exp}}
+\newcommand{\Var}{\text{Var}}
+\newcommand{\Binom}{\text{Binom}}
+\newcommand{\btheta}{\bm\theta}
+\newcommand{\bT}{\bm T}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\BP}{\mathbb{P}}
+\newcommand{\x}{\bm x}
+\newcommand{\y}{\bm y}
+\newcommand{\z}{\bm z}
+\newcommand{\bmT}{\bm T}
+\newcommand{\bmX}{\bm X}
+\newcommand{\bmY}{\bm Y}
+\newcommand{\bmZ}{\bm Z}
+\newcommand{\br}{\bm r}
+\newcommand{\bI}{\bm I}
+\newcommand{\1}{\mathds{1}}
+
+
+
+% If you want a new function, use operatorname to define that function (don't use \text)
+
+\renewcommand{\baselinestretch}{1.25}
+
+
+\usepackage{dcolumn}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,arrows}
+
+\newcolumntype{M}[1]{D{.}{.}{1.#1}}
+
+
+% If you want a new function, use operatorname to define that function (don't use \text)
+
+\renewcommand{\baselinestretch}{1.25}
+
+\title{CS 182, Problem Set 4}
+\date{November 1, 2021}
+
+\begin{document}
+
+\maketitle
+
+\vspace*{-0.25in}
+\centerline{Due: November 15, 2021 11:59pm}
+
+\begin{center}
+\end{center}
+\vspace*{0.15in}
+
+
+\noindent This problem set covers Lectures 12, 13, 14, 15. The topics include Bayes' Nets, Hidden Markov Models (HMMs), Markov Decision Processes (MDPs), and Reinforcement Learning (RL).
+\vspace*{0.35in}
+
+\begin{statement}{1} 
+(20 points) \emph{Comprehension.} 
+\begin{enumerate}
+    \item \emph{Bayes Nets. }
+    Consider the following Bayes net:
+
+\newcommand{\vara}{Sprinkler}
+\newcommand{\varb}{Grass wet}
+\newcommand{\varc}{Rain}
+\begin{center}
+\begin{tikzpicture}[
+  node distance=1cm and 0cm,
+  mynode/.style={draw,ellipse,text width=2cm,align=center}
+]
+\node[mynode] (sp) {\vara};
+\node[mynode,below right=of sp] (gw) {\varb};
+\node[mynode,above right=of gw] (ra) {\varc};
+\path (ra) edge[-latex] (sp)
+(sp) edge[-latex] (gw) 
+(gw) edge[latex-] (ra);
+\node[left=0.5cm of sp]
+{
+\begin{tabular}{cM{2}M{2}}
+\toprule
+& \multicolumn{2}{c}{\vara} \\
+Rain & \multicolumn{1}{c}{T} & \multicolumn{1}{c}{F} \\
+\cmidrule(r){1-1}\cmidrule(l){2-3}
+F & 0.4 & 0.6 \\
+T & 0.1 & 0.9 \\
+\bottomrule
+\end{tabular}
+};
+\node[right=0.5cm of ra]
+{
+\begin{tabular}{M{1}M{1}}
+\toprule
+\multicolumn{2}{c}{\varc} \\
+\multicolumn{1}{c}{T} & \multicolumn{1}{c}{F} \\
+\cmidrule{1-2}
+0.2 & 0.8 \\
+\bottomrule
+\end{tabular}
+};
+\node[below=0.5cm of gw]
+{
+\begin{tabular}{ccM{2}M{2}}
+\toprule
+& & \multicolumn{2}{c}{\varb} \\
+\multicolumn{1}{l}{\vara} & \multicolumn{1}{l}{\varc} & \multicolumn{1}{c}{T} & \multicolumn{1}{c}{F} \\
+\cmidrule(r){1-2}\cmidrule(l){3-4}
+F & F & 0.1 & 0.9 \\
+F & T & 0.2 & 0.8 \\
+T & F & 0.3 & 0.7 \\
+T & T & 0.4 & 0.6 \\
+\bottomrule
+\end{tabular}
+};
+
+\end{tikzpicture}
+\end{center}
+    In each table, the value of the conditioned variables are presented on the leftmost columns.
+    \begin{enumerate}
+        \item (4 points) What is $\mathbb{P}(\text{Grass wet}=\text{True}\mid \text{Rain}=\text{False})$?
+        \item (4 points) What is $\mathbb{P}(\text{Grass wet}=\text{True})$?
+        \item (4 points) Suppose we did likelihood weighting on this network, where we observe evidence $Sprinkler=True$.
+        What is the weight of a sample \[\bm x = (Rain=True, Sprinkler=True, GrassWet=False)\] obtained from the \textsc{Weighted-Sample} algorithm?
+    \end{enumerate}
+    
+
+\item (4 Points) \textit{MDP's} Which of the following statements are true for an MDP? Select all that apply and briefly explain why.
+    \begin{enumerate}
+        \item (4 points) If one is using value iteration and the values have converged, the optimal policy based on the current values must have converged as well.
+        \item (4 points) Policies found by value iteration are superior to policies found by policy iteration, assuming that both algorithms have converged.
+    \end{enumerate}
+\end{enumerate}
+\end{statement}
+
+\newpage
+\begin{statement}{2}
+(20 points) \emph{Hidden Markov Models. }
+Alice and Bob are living in a house. Bob never leaves the house or checks the weather outside, so he never knows for sure if it is rainy or sunny (assume for simplicity these are the only two weather phenomena).
+However, Alice does leave the house, and her mood is determined stochastically by the status of the weather that day.
+Bob is able to make inferences about the weather based on Alice's mood when she gets home, so he uses a hidden markov model in which the weather describes the underlying hidden states and Alice's mood are his observed states. He knows that in his city of Markovtown, 
+\begin{itemize}
+    \item If it is raining today, then it will rain with probability $0.8$ on the next day.
+    \item If it is currently sunny, then it will be sunny with probability $0.6$ on the next day.
+\end{itemize}
+He also knows that Alice's mood depends on the weather in the following process:
+\begin{itemize}
+    \item If it is raining, then Alice will be in a bad mood with probability $0.7$.
+    \item If it is sunny, then Alice will be in a good mood with probability $0.6$.
+\end{itemize}
+One day, Bob checks the weather channel, so he knows for sure that it rained. He then recorded Alice's mood the next three days (not including the day he checked the weather channel): good, good, bad.
+\begin{enumerate}
+    \item (10 points) What is the probability that it will be rainy on day $4$?
+    \item (10 points) Under Bob's model, what is the most likely sequence of weather states over the three days?
+\end{enumerate}
+
+\end{statement}
+
+\newpage
+
+\begin{statement}{3}
+(20 points) \emph{Markov Decision Processes. }
+Annie is a 5-year old girl who loves eating candy and is ambivalent regarding vegetables. She can either choose to eat candy (Hershey's, Skittles, Peanut Butter Cups) or eat vegetables during every meal. Eating candy gives her +10 in happiness points, while eating vegetables only gives her +4 happiness points. But if she eats too much candy while sick, her teeth will all fall out (she won't be able to eat any more). Annie will be in one of three states: healthy, sick, and toothless. Eating candy tends to make Annie sick, while eating vegetables tends to keep Annie healthy. If she eats too much candy, she'll be toothless and won't eat anything else. The transitions are shown in the table below.
+
+\begin{table}[htb]
+\centering
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+        Health condition &	Candy or Vegetables? &	Next condition & Probability \\\hline
+        healthy &	vegetables &	healthy & 	1 \\\hline
+        healthy &	candy &	healthy & 	1/4 \\\hline
+        healthy &	candy &	sick & 	3/4 \\\hline
+        sick &	vegetables &	healthy & 	1/4 \\\hline
+        sick &	vegetables &	sick & 	3/4 \\\hline
+        sick &	candy &	sick & 	7/8 \\\hline
+        sick &	candy &	toothless & 	1/8 \\\hline
+    \end{tabular}
+\end{table}
+  
+\begin{enumerate}
+    \item (4 points) Model this problem as a Markov Decision Process: formally specify each state, action, and transition $T(s,a,s')$ and reward $R(a)$ functions.
+    \item (7 points) Write down the utility function $U^\pi(s)$ for this problem in all possible states under the following policies: $\pi_1$ in which Annie always eats candy and $\pi_2$ in which Annie always eats vegetables. The discount factor can be expressed as $\gamma$.
+    \item (9 points) Start with a policy in which Annie always eats candy no matter what the her health condition is. Simulate the first two iterations of the policy iteration algorithm. Show how the policy evolves as you run the algorithm. What is the policy after the third iteration? Set $\gamma = 0.9$.
+    
+\end{enumerate}
+\end{statement}
+
+\newpage
+
+\begin{statement}{4}
+(40 points)
+\emph{Planning and Reinforcement Learning. } In this problem, you will be implementing various planning and reinforcement learning algorithms on OpenAI's \href{https://gym.openai.com/envs/FrozenLake-v0/}{Frozen Lake Environment}. 
+You will need the packages \texttt{gym==0.21.0}, \texttt{IPython==7.29.0}, and 
+\texttt{matplotlib==3.4.3}.
+
+In this environment, an agent controls the movement of a character in a 4x4 grid world. Some tiles of the grid are walkable ($S$, for start, $F$, for frozen, $G$, for goal), and others lead to the agent falling into the water ($H$, for hole). The agent is rewarded $+1$ for reaching the goal state and $0$ otherwise. 
+
+We will work with a few variations of the Frozen Lake environment. In the first version, the parameter \verb|is_slippery| is set to False, so every action leads to a deterministic tile. When \verb|is_slippery| is set to True, the movement direction of the agent is uncertain. In particular, if an agent chooses to go in one direction, there is a 1/3 probability the agent goes in the intended direction and a 1/3 probability that the agent goes in each of the directions that are perpendicular to the intended direction. If an agent is on the edge of the map and attempts to move off the map, it simply stays in place.
+
+\noindent
+Please submit your code files along with this pdf in the same Gradescope submission. The Gradescope autograder scores correspond to the points from parts 2a and 3a.
+For the plots to add to your PDF submission, use \texttt{matplotlib}, but do not include this code in your submission to the autograder because the autograder does not support this package.
+
+\begin{enumerate}
+    \item (4 points) Model this problem as a Markov Decision Process: formally specify the states (including terminal states), actions, and transition and reward functions.
+    
+    \item
+    \begin{enumerate}
+        \item (10 points) Implement value iteration in \texttt{pset4.py} by filling out the method \verb|value_iteration| within the class \verb|DynamicProgramming|. You may find \\ \verb|updated_action_values| to be a useful helper function when writing this.
+        \item (10 points) Write the mean and variance of the rewards over $1000$ episodes of the final policy using the parameter $\verb|gamma| = 0.9$. For an agent using the policy found by value iteration, plot a histogram of the number of steps it takes an agent to reach the goal. Let's say the agent takes 0 steps to reach the goal if the agent falls into a hole. Does this agent always reach the goal? Why or why not? Use the map to inform your explanation.
+    \end{enumerate}
+    \item 
+    \begin{enumerate}
+    \item (10 points) Implement active, model free reinforcement learning in the form of Q-learning in \texttt{pset4.py} by filling out the functions \verb|choose_action| and \verb|q_learning| within the class \verb|QLearning|.
+    Use $\alpha(k_{sa}) = \min(0.1, 10 k_{sa}^{-0.8})$\footnote{The technical conditions in order to theoretically guarantee convergence is that $\sum_{k_{sa}=1}^\infty \alpha(k_{sa}) = \infty$ and $\sum_{k_{sa}=1}^\infty \alpha(k_{sa})^2 < \infty$, and while you are welcome to change this so long as you converge to the correct value, this rate was chosen by staff as one that seems to work well in practice for this environment.}.
+    \item (6 points) Plot the mean returns over 100 episodes of the Q-learning agent that acts solely based on max-Q values after every 1000 episodes (this should be done by using the \verb|compute_episode_rewards| function). Use the parameters $\verb|gamma|=0.9, \verb|epsilon|=0.001$. How does your agent compare to the agent following the policy derived from part (a)?
+    \end{enumerate}
+\end{enumerate}
+
+\end{statement}
+
+\end{document}
+
